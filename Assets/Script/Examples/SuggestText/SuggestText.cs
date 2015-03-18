@@ -1,9 +1,12 @@
-﻿using System;
+﻿#if UNITY_WEBPLAYER
+#else
+using System.Xml.Linq;
+using UniRx;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Xml.Linq;
-using UniRx;
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,11 +26,12 @@ namespace UniRxExamples
         private readonly string _apiUrlFormat
             = "http://www.google.com/complete/search?oe=utf_8&ie=utf_8&hl=ja&output=toolbar&q={0}";
 
-        private void Start()
-        {
 #if UNITY_WEBPLAYER
     //WebPlayerではクロスドメイン制限があるので動作しない
 #else
+        private void Start()
+        {
+
             _inputField
                 .OnValueChangeAsObservable()
                 .Throttle(TimeSpan.FromMilliseconds(200))
@@ -45,7 +49,7 @@ namespace UniRxExamples
                 .OnValueChangeAsObservable()
                 .Where(word => word.Length == 0)
                 .SubscribeToText(_text, _ => "");
-#endif
+
         }
 
         /// <summary>
@@ -62,5 +66,7 @@ namespace UniRxExamples
                 .Attributes("data")
                 .Select(x => x.Value);
         }
+#endif
     }
+
 }
