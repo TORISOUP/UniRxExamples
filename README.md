@@ -3,6 +3,8 @@ UniRxExamples
 [UniRx](https://github.com/neuecc/UniRx)のサンプルコード集です。  
 Asset/Script/以下のコードについては自由に改変して使ってもらって結構です。
 
+http://torisoup.net/unirx-examples/
+
 使用したもの
 ---
 ###UniRx  
