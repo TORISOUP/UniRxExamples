@@ -12,16 +12,14 @@ namespace UniRx.Examples
         }
 
         public event EventHandler<MyEventArgs> FooBar;
-
         public event Action<int> FooFoo;
 
-        private CompositeDisposable disposables = new CompositeDisposable();
+        CompositeDisposable disposables = new CompositeDisposable();
 
         // Subject is Rx's native event expression and recommend way for use Rx as event.
         // Subject.OnNext as fire event,
         // expose IObserver is subscibable for external source, it's no need convert.
-        private Subject<int> onBarBar = new Subject<int>();
-
+        Subject<int> onBarBar = new Subject<int>();
         public IObservable<int> OnBarBar { get { return onBarBar; } }
 
         public override void Start()

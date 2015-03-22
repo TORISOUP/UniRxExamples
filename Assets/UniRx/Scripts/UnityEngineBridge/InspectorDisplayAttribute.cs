@@ -22,7 +22,14 @@ namespace UniRx
         {
             var attr = this.attribute as InspectorDisplayAttribute;
             var fieldValue = property.FindPropertyRelative(attr.FieldName);
-            UnityEditor.EditorGUI.PropertyField(position, fieldValue, label);
+            if (fieldValue == null)
+            {
+                UnityEditor.EditorGUI.LabelField(position, label, new GUIContent() { text = "InspectorDisplay can't find target:" + attr.FieldName });
+            }
+            else
+            {
+                UnityEditor.EditorGUI.PropertyField(position, fieldValue, label);
+            }
         }
     }
 

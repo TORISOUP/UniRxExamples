@@ -301,6 +301,7 @@ namespace UniRx
             if (!cancellation.IsCancellationRequested)
             {
                 observer.OnNext(Unit.Default);
+                observer.OnCompleted();
             }
         }
 
@@ -332,6 +333,7 @@ namespace UniRx
                 if (currentFrame++ == dueTimeFrameCount)
                 {
                     observer.OnNext(0);
+                    observer.OnCompleted();
                     break;
                 }
                 yield return frameCountType.GetYieldInstruction();

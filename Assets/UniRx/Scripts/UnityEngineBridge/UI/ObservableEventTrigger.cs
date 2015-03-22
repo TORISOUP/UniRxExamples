@@ -11,16 +11,18 @@ using UnityEngine.EventSystems;
 
 namespace UniRx.UI
 {
+    /// <summary>
+    /// Lightweight ObservableEventTrigger implemented events directly.
+    /// </summary>
     [AddComponentMenu("Event/Observable Event Trigger")]
-    public class ObservableEventTrigger : EventTrigger
+    public class ObservableEventTrigger : MonoBehaviour, IEventSystemHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler, IBeginDragHandler, IInitializePotentialDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IScrollHandler, IUpdateSelectedHandler, ISelectHandler, IDeselectHandler, IMoveHandler, ISubmitHandler, ICancelHandler
     {
 #region IDSelect
 
         Subject<BaseEventData> onDeselect;
 
-        public override void OnDeselect(BaseEventData eventData)
+        public void OnDeselect(BaseEventData eventData)
         {
-            base.OnDeselect(eventData);
             if (onDeselect != null) onDeselect.OnNext(eventData);
         }
 
@@ -35,9 +37,8 @@ namespace UniRx.UI
 
         Subject<AxisEventData> onMove;
 
-        public override void OnMove(AxisEventData eventData)
+        public  void OnMove(AxisEventData eventData)
         {
-            base.OnMove(eventData);
             if (onMove != null) onMove.OnNext(eventData);
         }
 
@@ -52,9 +53,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onPointerDown;
 
-        public override void OnPointerDown(PointerEventData eventData)
+        public  void OnPointerDown(PointerEventData eventData)
         {
-            base.OnPointerDown(eventData);
             if (onPointerDown != null) onPointerDown.OnNext(eventData);
         }
 
@@ -69,9 +69,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onPointerEnter;
 
-        public override void OnPointerEnter(PointerEventData eventData)
+        public  void OnPointerEnter(PointerEventData eventData)
         {
-            base.OnPointerEnter(eventData);
             if (onPointerEnter != null) onPointerEnter.OnNext(eventData);
         }
 
@@ -86,9 +85,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onPointerExit;
 
-        public override void OnPointerExit(PointerEventData eventData)
+        public  void OnPointerExit(PointerEventData eventData)
         {
-            base.OnPointerExit(eventData);
             if (onPointerExit != null) onPointerExit.OnNext(eventData);
         }
 
@@ -103,9 +101,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onPointerUp;
 
-        public override void OnPointerUp(PointerEventData eventData)
+        public  void OnPointerUp(PointerEventData eventData)
         {
-            base.OnPointerUp(eventData);
             if (onPointerUp != null) onPointerUp.OnNext(eventData);
         }
 
@@ -120,9 +117,8 @@ namespace UniRx.UI
 
         Subject<BaseEventData> onSelect;
 
-        public override void OnSelect(BaseEventData eventData)
+        public  void OnSelect(BaseEventData eventData)
         {
-            base.OnSelect(eventData);
             if (onSelect != null) onSelect.OnNext(eventData);
         }
 
@@ -137,9 +133,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onPointerClick;
 
-        public override void OnPointerClick(PointerEventData eventData)
+        public  void OnPointerClick(PointerEventData eventData)
         {
-            base.OnPointerClick(eventData);
             if (onPointerClick != null) onPointerClick.OnNext(eventData);
         }
 
@@ -154,9 +149,8 @@ namespace UniRx.UI
 
         Subject<BaseEventData> onSubmit;
 
-        public override void OnSubmit(BaseEventData eventData)
+        public  void OnSubmit(BaseEventData eventData)
         {
-            base.OnSubmit(eventData);
             if (onSubmit != null) onSubmit.OnNext(eventData);
         }
 
@@ -171,9 +165,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onDrag;
 
-        public override void OnDrag(PointerEventData eventData)
+        public  void OnDrag(PointerEventData eventData)
         {
-            base.OnDrag(eventData);
             if (onDrag != null) onDrag.OnNext(eventData);
         }
 
@@ -188,9 +181,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onBeginDrag;
 
-        public override void OnBeginDrag(PointerEventData eventData)
+        public  void OnBeginDrag(PointerEventData eventData)
         {
-            base.OnBeginDrag(eventData);
             if (onBeginDrag != null) onBeginDrag.OnNext(eventData);
         }
 
@@ -205,9 +197,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onEndDrag;
 
-        public override void OnEndDrag(PointerEventData eventData)
+        public  void OnEndDrag(PointerEventData eventData)
         {
-            base.OnEndDrag(eventData);
             if (onEndDrag != null) onEndDrag.OnNext(eventData);
         }
 
@@ -222,9 +213,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onDrop;
 
-        public override void OnDrop(PointerEventData eventData)
+        public  void OnDrop(PointerEventData eventData)
         {
-            base.OnDrop(eventData);
             if (onDrop != null) onDrop.OnNext(eventData);
         }
 
@@ -239,9 +229,8 @@ namespace UniRx.UI
 
         Subject<BaseEventData> onUpdateSelected;
 
-        public override void OnUpdateSelected(BaseEventData eventData)
+        public  void OnUpdateSelected(BaseEventData eventData)
         {
-            base.OnUpdateSelected(eventData);
             if (onUpdateSelected != null) onUpdateSelected.OnNext(eventData);
         }
 
@@ -256,9 +245,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onInitializePotentialDrag;
 
-        public override void OnInitializePotentialDrag(PointerEventData eventData)
+        public  void OnInitializePotentialDrag(PointerEventData eventData)
         {
-            base.OnInitializePotentialDrag(eventData);
             if (onInitializePotentialDrag != null) onInitializePotentialDrag.OnNext(eventData);
         }
 
@@ -273,9 +261,8 @@ namespace UniRx.UI
 
         Subject<BaseEventData> onCancel;
 
-        public override void OnCancel(BaseEventData eventData)
+        public  void OnCancel(BaseEventData eventData)
         {
-            base.OnCancel(eventData);
             if (onCancel != null) onCancel.OnNext(eventData);
         }
 
@@ -290,9 +277,8 @@ namespace UniRx.UI
 
         Subject<PointerEventData> onScroll;
 
-        public override void OnScroll(PointerEventData eventData)
+        public  void OnScroll(PointerEventData eventData)
         {
-            base.OnScroll(eventData);
             if (onScroll != null) onScroll.OnNext(eventData);
         }
 

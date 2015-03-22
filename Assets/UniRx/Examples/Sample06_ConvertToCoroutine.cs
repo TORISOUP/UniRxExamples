@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace UniRx.Examples
@@ -16,7 +17,7 @@ namespace UniRx.Examples
         }
 
         // like WWW.text/error, LazyTask is awaitable value container
-        private IEnumerator LazyTaskTest()
+        IEnumerator LazyTaskTest()
         {
             // IObservable<T>
             var task = Observable.Start(() => 100).ToLazyTask();

@@ -322,20 +322,20 @@ public class Test : ObservableMonoBehaviour
 > for example
 
 ```
-public class ObservableDestoryMonoBehaviour : MonoBehaviour
+public class ObservableCollectionEnter2DMonoBehaviour : MonoBehaviour
 {
-    Subject<Unit> onDestroy;
+    Subject<Collision2D> onCollisionEnter2D;
 
-    /// <summary>This function is called when the MonoBehaviour will be destroyed.</summary>
-    public virtual void OnDestroy()
+    /// <summary>Sent when an incoming collider makes contact with this object's collider (2D physics only).</summary>
+    public virtual void OnCollisionEnter2D(Collision2D coll)
     {
-        if (onDestroy != null) onDestroy.OnNext(Unit.Default);
+        if (onCollisionEnter2D != null) onCollisionEnter2D.OnNext(coll);
     }
 
-    /// <summary>This function is called when the MonoBehaviour will be destroyed.</summary>
-    public IObservable<Unit> OnDestroyAsObservable()
+    /// <summary>Sent when an incoming collider makes contact with this object's collider (2D physics only).</summary>
+    public IObservable<Unit> OnCollisionEnter2DAsObservable()
     {
-        return onDestroy ?? (onDestroy = new Subject<Unit>());
+        return onCollisionEnter2D ?? (onCollisionEnter2D = new Subject<Collision2D>());
     }
 }
 ```
@@ -500,7 +500,7 @@ void Start()
     
     // input shows delay after 1 second
     MyInput.OnValueChangeAsObservable()
-        .Skip(1) // ignore initial text(blank)
+        .Where(x => x != null)
         .Delay(TimeSpan.FromSeconds(1))
         .SubscribeToText(MyText); // SubscribeToText is UniRx.UI Extension Method
     
@@ -624,17 +624,16 @@ public class Enemy
 
 View is Scene, Unity hierarchy. View to Presenter associates by Unity Engine on initialize. XxxAsObservable is created a Signal simply, no overhead. SubscribeToText and SubscribeToInteractable(like Command) is simple binding like helper.  There are simple tools but very powerful. It is natural for Unity and achieve maximum performance and clean architecture.
 
-Of course you can use with other MVVM(or MV*) framework. UniRx/ReactiveProperty is only simple toolkit.
+![](StoreDocument/MVRP_Loop.png)
 
-ObservableUIBehaviour
+V -> RP -> M -> RP -> V completely connected in reactive. UniRx provides all adaptor method/classes. Of course you can use with other MVVM(or MV*) framework. UniRx/ReactiveProperty is only simple toolkit.
+
+ObservableEventTrigger
 ---
-In `UniRx.UI` namespace have some observable classes. `ObservbaleButton`, `ObservableImage`, `ObservableInputField`, `ObservableSelectable`, `ObservableSlider`, `ObservableText`, `ObservableToggle`, `ObservableUIBehaviour`, `ObservableEventTrigger`, `ObservableEventTriggerSlim` are conveting to callback to IObservable(note: other than this `UniRx` namespace has similar class  `ObservableStateMachineBehaviour`).
-
-Especially `ObservableEventTrigger`, `ObservableEventTriggerSlim` is very useful for adhoc attach and observe UI events.
+In `UniRx.UI` namespace have `ObservableEventTrigger`(note: other than this `UniRx` namespace has similar class  `ObservableStateMachineBehaviour`). ObservableEventTrigger is very useful for adhoc attach and observe UI events.
 
 ```csharp
-// ObservableEventTriggerSlim is lightweight version of ObservableEventTrigger for only set from script.
-var eventTrigger = this.gameObject.AddComponent<ObservableEventTriggerSlim>();
+var eventTrigger = this.gameObject.AddComponent<ObservableEventTrigger>();
 eventTrigger.OnBeginDragAsObservable()
     .SelectMany(_ => eventTrigger.OnDragAsObservable(), (start, current) => UniRx.Tuple.Create(start, current))
     .TakeUntil(eventTrigger.OnEndDragAsObservable())
@@ -700,6 +699,12 @@ Many Videos and slides and documents.
 
 ReactiveX | http://reactivex.io/languages.html
 UniRx is official ReacitveX language family.
+
+Author's other Unity + LINQ Assets
+---
+[LINQ to GameObject](https://github.com/neuecc/LINQ-to-GameObject-for-Unity/) is GameObject extensions for Unity that allows traverse hierarchy and append GameObject like LINQ to XML. It's free and opensource on GitHub.
+
+![](https://raw.githubusercontent.com/neuecc/LINQ-to-GameObject-for-Unity/master/Images/axis.jpg)
 
 Author Info
 ---

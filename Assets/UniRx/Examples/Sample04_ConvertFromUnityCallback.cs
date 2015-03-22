@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UniRx.Examples
 {
@@ -13,9 +14,9 @@ namespace UniRx.Examples
             public UnityEngine.LogType LogType;
         }
 
-        private static class LogHelper
+        static class LogHelper
         {
-#if (UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)
+#if (UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6)                    
             static Subject<LogCallback> subject;
 
             public static IObservable<LogCallback> LogCallbackAsObservable()
@@ -25,6 +26,7 @@ namespace UniRx.Examples
                     subject = new Subject<LogCallback>();
 
                     // Publish to Subject in callback
+
 
                     UnityEngine.Application.RegisterLogCallback((condition, stackTrace, type) =>
                     {
@@ -36,14 +38,12 @@ namespace UniRx.Examples
             }
 
 #else
-
             public static IObservable<LogCallback> LogCallbackAsObservable()
             {
                 return Observable.FromEvent<Application.LogCallback, LogCallback>(
                     h => (condition, stackTrace, type) => h(new LogCallback { Condition = condition, StackTrace = stackTrace, LogType = type }),
                     h => Application.logMessageReceived += h, h => Application.logMessageReceived -= h);
             }
-
 #endif
         }
 
