@@ -21,10 +21,17 @@ namespace UniRxExamples
         public override void Start()
         {
             base.Start();
+
             //IsGroundedが直近5フレーム以内で変動した場合は無視する
-            UpdateAsObservable()
-                .Select(_ => playerCharacterController.isGrounded)
-                .DistinctUntilChanged()
+            //UpdateAsObservable()
+            //    .Select(_ => playerCharacterController.isGrounded)
+            //    .DistinctUntilChanged()
+            //    .ThrottleFrame(5)
+            //    .Subscribe(x => throttledIsGrounded = x);
+
+            //毎フレーム変動を監視するならObserveEveryValueChangedが使える
+            playerCharacterController
+                .ObserveEveryValueChanged(x => x.isGrounded)
                 .ThrottleFrame(5)
                 .Subscribe(x => throttledIsGrounded = x);
 
